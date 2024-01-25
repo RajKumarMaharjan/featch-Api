@@ -82,3 +82,7 @@ form button{
     color: #fff;
     cursor: pointer;
 }
+
+form .switch {
+    cursor: pointer;
+}

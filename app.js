@@ -4,6 +4,7 @@ const btn = document.querySelector("form button");
 const fromCurr = document.querySelector(".from select");
 const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".message");
+const switchBtn = document.querySelector(".switch")
 
 for(let select of dropDowns) {
     for (currCode in countryList) {
@@ -43,12 +44,26 @@ const updateExchangeRate = async () => {
   let rate = data[toCurr.value.toLowerCase()];      
   
   let finalAmount = amountValue * rate;
-  msg.innerText = `${amountValue} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`
+  msg.innerText = `${amountValue} ${fromCurr.value} = ${finalAmount.toFixed(2)} ${toCurr.value}`
 }
 
 
 btn.addEventListener("click", (evt) => {
   evt.preventDefault();
+  updateExchangeRate();
+});
+
+switchBtn.addEventListener("click", () => {
+  // Swap selected options between "From" and "To" dropdowns
+  const temp = fromCurr.value;
+  fromCurr.value = toCurr.value;
+  toCurr.value = temp;
+
+  // Update flags for the swapped countries
+  updateFlag(fromCurr);
+  updateFlag(toCurr);
+
+  // Update exchange rate based on the new selection
   updateExchangeRate();
 });
 
